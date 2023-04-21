@@ -11,6 +11,7 @@ import androidx.wear.watchface.WatchState
 import androidx.wear.watchface.style.CurrentUserStyleRepository
 import java.lang.Math.pow
 import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 import kotlin.math.*
 
 private const val FRAME_PERIOD_MS_DEFAULT: Long = 16L
@@ -200,7 +201,7 @@ class TixyWatchCanvasRenderer(
             timeR[16*7+8] = colon;
             timeR[16*9+8] = colon;
 
-            val t = now.toInstant().toEpochMilli() / 1000.0
+            val t = (now.toInstant().toEpochMilli() - now.truncatedTo(ChronoUnit.DAYS).toInstant().toEpochMilli()) / 1000.0
             for (y in 0..15) {
                 for (x in 0..15) {
                     val v = min(1.0f, max(-1.0f,
